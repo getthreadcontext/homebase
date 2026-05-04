@@ -42,7 +42,9 @@ export const InvitePage: React.FC = () => {
       localStorage.setItem("tempInviteCode", inviteCode);
 
       const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
-      const redirectUri = import.meta.env.VITE_DISCORD_REDIRECT_URI;
+      const redirectUri =
+        import.meta.env.VITE_DISCORD_REDIRECT_URI ||
+        `${window.location.origin}/auth/callback`;
       const scope = "identify";
       const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
       window.location.href = discordAuthUrl;

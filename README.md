@@ -74,8 +74,12 @@ SERVICE_URLS=https://service1.example.com,https://service2.example.com
 
 1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
 2. Create a new application
-3. Add OAuth2 redirect URL: `http://localhost:5173/auth/callback`
+3. Add OAuth2 redirect URL:
+   - `http://localhost:5173/auth/callback` for local development
+   - `https://YOUR_COOLIFY_URL/auth/callback` for production
 4. Copy Client ID and Secret to `.env.local`
+
+> The redirect URI in Discord must exactly match the value used by the app when it starts login. If you deploy to Coolify, set `VITE_DISCORD_REDIRECT_URI` to your Coolify app URL plus `/auth/callback`.
 
 ### 4. Convex Setup
 

@@ -36,13 +36,18 @@ function requireEnv(names: string[]) {
 }
 
 // Exchange Discord code for access token
-async function getDiscordAccessToken(code: string) {
+async function getDiscordAccessToken(code: string, redirectUri?: string) {
   const clientId = requireEnv(["DISCORD_CLIENT_ID", "VITE_DISCORD_CLIENT_ID"]);
   const clientSecret = requireEnv(["DISCORD_CLIENT_SECRET"]);
-  const redirectUri = requireEnv([
-    "DISCORD_REDIRECT_URI",
-    "VITE_DISCORD_REDIRECT_URI",
-  ]);
+  const redirectUriToUse =
+    redirectUri ||
+    process.env.DISCORD_REDIRECT_URI ||
+    process.env.VITE_DISCORD_REDIRECT_URI ||
+    process.env.CONVEX_REDIRECT_URI;
+
+  if (!redirectUriToUse) {
+    throw new Error("Missing required redirect URI for Discord token exchange");
+  }
 
   const response = await fetch("https://discord.com/api/oauth2/token", {
     method: "POST",
@@ -54,7 +59,7 @@ async function getDiscordAccessToken(code: string) {
       client_secret: clientSecret,
       code,
       grant_type: "authorization_code",
-      redirect_uri: redirectUri,
+      redirect_uri: redirectUriToUse,
     }).toString(),
   });
 
@@ -89,8 +94,17 @@ export const authCallback = httpAction(async (ctx, request) => {
       );
     }
 
+    // Determine redirect URI from the request origin or env fallback
+    const originHeader = request.headers.get("origin");
+    const urlOrigin = originHeader
+      ? new URL(originHeader).origin
+      : null;
+    const redirectUri = urlOrigin
+      ? `${urlOrigin}/auth/callback`
+      : undefined;
+
     // Exchange Discord code for access token
-    const accessToken = await getDiscordAccessToken(code);
+    const accessToken = await getDiscordAccessToken(code, redirectUri);
 
     // Get Discord user info
     const discordUser = await getDiscordUser(accessToken);
