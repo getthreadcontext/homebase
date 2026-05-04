@@ -1,0 +1,108 @@
+.dashboard-container {
+  min-height: 100vh;
+  background: transparent;
+}
+
+.dashboard-header {
+  color: var(--fg);
+  padding: 0 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 28px;
+}
+
+.dashboard-header h1 {
+  margin: 4px 0 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.dashboard-header button {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.dashboard-main {
+  margin-bottom: 16px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.user-info h2 {
+  color: var(--ink);
+  margin-bottom: 0;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+}
+
+.info-card {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  border: none;
+  display: grid;
+  gap: 16px;
+}
+
+.info-card p {
+  margin: 0;
+  color: var(--ink);
+}
+
+.info-card strong {
+  color: var(--ink);
+}
+
+.projects {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.projects h2 {
+  color: var(--ink);
+  margin-bottom: 0;
+}
+
+.dashboard-header h1,
+.user-info h2,
+.projects h2 {
+  text-transform: lowercase;
+}
+
+.dashboard-main p {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.projects p {
+  color: var(--muted);
+}
+
+@media (max-width: 960px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .dashboard-main.editor-grid.two-col {
+    grid-template-columns: 1fr;
+  }
+}

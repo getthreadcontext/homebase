@@ -1,0 +1,41 @@
+.invite-container {
+  min-height: 100vh;
+  padding: 32px;
+}
+
+.invite-form {
+  max-width: 560px;
+}
+
+.invite-form h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.invite-form p {
+  color: var(--muted);
+  margin-bottom: 16px;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.invite-form button {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.invite-form .btn-secondary {
+  margin-top: 12px;
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.invite-form .btn-secondary:hover {
+  background: var(--ink);
+  color: var(--fg);
+}
+
+.invite-empty {
+  max-width: 560px;
+}

@@ -1,0 +1,27 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.auth-container > div {
+  background: var(--panel);
+  border-radius: 0;
+  padding: 48px 40px;
+  border: 2px solid var(--ink);
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+}
+
+.auth-container h1 {
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.auth-container p {
+  color: var(--muted);
+  margin-bottom: 12px;
+}
