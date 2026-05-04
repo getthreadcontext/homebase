@@ -16,11 +16,9 @@ async function readAdminIds(ctx: { db: any }) {
     .withIndex("by_key", (q: any) => q.eq("key", "ADMIN_IDS"))
     .first();
 
-  if (config?.value) {
-    return parseAdminIds(config.value);
-  }
-
-  return parseAdminIds(process.env.ADMIN_IDS);
+  const configIds = parseAdminIds(config?.value);
+  const envIds = parseAdminIds(process.env.ADMIN_IDS);
+  return Array.from(new Set([...configIds, ...envIds]));
 }
 
 // Initialize admin IDs in database (call once during setup)
@@ -53,6 +51,16 @@ export const getWhitelistedDiscordIds = query({
   args: {},
   handler: async (ctx) => {
     return await readAdminIds(ctx);
+  },
+});
+
+export const getAllDiscordIds = query({
+  args: {},
+  handler: async (ctx) => {
+    const users = await ctx.db.query("users").collect();
+    const userIds = users.map((user) => user.discordId);
+    const adminIds = await readAdminIds(ctx);
+    return Array.from(new Set([...userIds, ...adminIds]));
   },
 });
 

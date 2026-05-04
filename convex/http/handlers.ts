@@ -424,7 +424,7 @@ export const getWhitelistedIds = httpAction(async (ctx, request) => {
       return new Response("Method not allowed", { status: 405 });
     }
 
-    const ids = await ctx.runQuery(api.functions.getWhitelistedDiscordIds, {});
+    const ids = await ctx.runQuery(api.functions.getAllDiscordIds, {});
     const hashedIds = await Promise.all(ids.map((id) => sha256Hex(id)));
 
     return new Response(JSON.stringify({ ids: hashedIds }), {
