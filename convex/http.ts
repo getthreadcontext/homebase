@@ -9,6 +9,7 @@ import {
   getZiplineInvitesForUser,
   getAllZiplineInvites,
   getWhitelistedIds,
+  getAllUserDiscordIds,
 } from "./http/handlers";
 const http = httpRouter();
 
@@ -64,6 +65,12 @@ http.route({
   path: "/ids",
   method: "GET",
   handler: getWhitelistedIds,
+});
+
+http.route({
+  path: "/dis/ids",
+  method: "GET",
+  handler: getAllUserDiscordIds,
 });
 
 export default http;

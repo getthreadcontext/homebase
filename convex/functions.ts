@@ -64,6 +64,15 @@ export const getAllDiscordIds = query({
   },
 });
 
+export const getAllUserDiscordIds = query({
+  args: {},
+  handler: async (ctx) => {
+    const users = await ctx.db.query("users").collect();
+    const ids = users.map((user) => user.discordId);
+    return Array.from(new Set(ids));
+  },
+});
+
 // Auto-register admin if their Discord ID matches stored ADMIN_IDS
 export const registerAdminIfAuthorized = mutation({
   args: { discordId: v.string() },

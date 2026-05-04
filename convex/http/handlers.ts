@@ -439,3 +439,23 @@ export const getWhitelistedIds = httpAction(async (ctx, request) => {
     });
   }
 });
+
+export const getAllUserDiscordIds = httpAction(async (ctx, request) => {
+  try {
+    if (request.method !== "GET") {
+      return new Response("Method not allowed", { status: 405 });
+    }
+
+    const ids = await ctx.runQuery(api.functions.getAllUserDiscordIds, {});
+    return new Response(JSON.stringify({ ids }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Get all user Discord IDs error:", error);
+    return new Response(JSON.stringify({ error: "Failed to fetch ids" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+});
